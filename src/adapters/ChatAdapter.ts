@@ -1,4 +1,4 @@
-import type { Message } from "..";
+import type { Message } from "../types/Message";
 import type { SendMessagePayload } from "../types/SendMessagePayload";
 
 // Интерфейс адаптера для чата.
