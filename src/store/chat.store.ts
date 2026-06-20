@@ -2,6 +2,7 @@ import { create } from "zustand";
 
 import type { Message } from "../types/Message";
 import type { ChatAdapter } from "../adapters/ChatAdapter";
+import type { SendMessagePayload } from "../types/SendMessagePayload";
 
 // Состояние чата
 interface ChatState {
@@ -18,12 +19,15 @@ interface ChatState {
   initialize: (adapter: ChatAdapter) => Promise<void>;
 
   // Отправка нового сообщения
-  sendMessage: (message: Omit<Message, "id">) => Promise<void>;
-
+  sendMessage: (message: SendMessagePayload) => Promise<void>;
   // Добавление нового сообщения в состояние
   addMessage: (message: Message) => void;
 
+  // Сброс состояния чата
   reset: () => void;
+
+  // Функция для отписки от новых сообщений
+  unsubscribe?: () => void;
 }
 
 // Хук для доступа к состоянию чата
@@ -48,6 +52,14 @@ export const useChatStore = create<ChatState>((set, get) => ({
     adapter.subscribe((message) => {
       get().addMessage(message);
     });
+
+    const unsubscribe = adapter.subscribe((message) => {
+      get().addMessage(message);
+    });
+
+    set({
+      unsubscribe,
+    });
   },
 
   sendMessage: async (message) => {
@@ -67,10 +79,13 @@ export const useChatStore = create<ChatState>((set, get) => ({
   },
 
   reset: () => {
-  set({
-    adapter: null,
-    messages: [],
-    isLoading: false,
-  });
-},
+    get().unsubscribe?.();
+
+    set({
+      adapter: null,
+      messages: [],
+      isLoading: false,
+      unsubscribe: undefined,
+    });
+  },
 }));

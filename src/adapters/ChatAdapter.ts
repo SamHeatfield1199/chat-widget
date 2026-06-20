@@ -1,4 +1,5 @@
-import type { Message } from "../types/Message";
+import type { Message } from "..";
+import type { SendMessagePayload } from "../types/SendMessagePayload";
 
 // Интерфейс адаптера для чата.
 export interface ChatAdapter {
@@ -9,7 +10,7 @@ export interface ChatAdapter {
 
   // Отправляет новое сообщение.
   // Должен возвращать полное сообщение с заполненным id и датой создания.
-  sendMessage(message: Omit<Message, "id">): Promise<Message>;
+  sendMessage(message: SendMessagePayload): Promise<Message>;
 
   // Подписывается на новые сообщения.
   // Должен вызывать callback при каждом новом сообщении,
