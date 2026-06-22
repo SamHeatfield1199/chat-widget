@@ -1,3 +1,4 @@
+// Тип данных для сообщений в чате.
 export interface Message {
   id: string;
   text: string;

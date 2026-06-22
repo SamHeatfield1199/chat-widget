@@ -19,12 +19,12 @@ export function MessageList({ renderMessage }: MessageListProps) {
   );
 
   return (
-    <>
+  <div style={{ flex: 1, overflowY: "auto" }}>
       {messages.map((message) => (
         <div key={message.id}>
           {(renderMessage ?? defaultRenderer)(message)}
         </div>
       ))}
-    </>
+    </div>
   );
 }

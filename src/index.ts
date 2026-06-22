@@ -7,6 +7,7 @@ export * from "./adapters/LocalAdapter";
 
 export * from "./components/MessageList/MessageList";
 export * from "./components/ChatInput/ChatInput";
+export * from "./components/ChatWindow/ChatWindow";
 
 export * from "./types/Message";
 export * from "./types/User";

@@ -49,10 +49,6 @@ export const useChatStore = create<ChatState>((set, get) => ({
       isLoading: false,
     });
 
-    adapter.subscribe((message) => {
-      get().addMessage(message);
-    });
-
     const unsubscribe = adapter.subscribe((message) => {
       get().addMessage(message);
     });
