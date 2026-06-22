@@ -10,17 +10,19 @@ const adapter = new LocalAdapter();
 
 export default function App() {
   return (
-     <ChatProvider adapter={adapter}>
-      <ChatWindow>
-        <MessageList />
+<ChatProvider adapter={adapter}>
+  <ChatWindow>
+    <MessageList
+      currentUserId="1"
+    />
 
-        <ChatInput
-          currentUser={{
-            id: "1",
-            name: "Настя",
-          }}
-        />
-      </ChatWindow>
-    </ChatProvider>
+    <ChatInput
+      currentUser={{
+        id: "1",
+        name: "Настя",
+      }}
+    />
+  </ChatWindow>
+</ChatProvider>
   );
 }

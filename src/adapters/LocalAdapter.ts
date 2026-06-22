@@ -14,32 +14,29 @@ export class LocalAdapter implements ChatAdapter {
   }
 
   /** @inheritdoc */
-async sendMessage(message: SendMessagePayload): Promise<Message> {
+  async sendMessage(message: SendMessagePayload): Promise<Message> {
+    const newMessage: Message = {
+      id: crypto.randomUUID(),
+      text: message.text,
+      author: message.author,
+      createdAt: new Date(),
+    };
 
-  const newMessage: Message = {
-    id: crypto.randomUUID(),
-    text: message.text,
-    author: message.author,
-    createdAt: new Date(),
-  };
+    this.messages.push(newMessage);
 
-  this.messages.push(newMessage);
+    this.listeners.forEach((listener) => listener(newMessage));
 
-  this.listeners.forEach((listener) => listener(newMessage));
-
-  return newMessage;
-}
+    return newMessage;
+  }
 
   /** @inheritdoc */
-  subscribe( callback: (message: Message) => void) {
+  subscribe(callback: (message: Message) => void) {
     this.listeners.push(callback);
 
-  return () => {
-    this.listeners =
-      this.listeners.filter(
-        (listener) =>
-          listener !== callback
+    return () => {
+      this.listeners = this.listeners.filter(
+        (listener) => listener !== callback
       );
-  };
-}
+    };
+  }
 }

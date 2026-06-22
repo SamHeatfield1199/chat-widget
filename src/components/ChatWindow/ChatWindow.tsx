@@ -5,7 +5,7 @@ interface ChatWindowProps extends PropsWithChildren {
 }
 
 // Компонент для отображения окна чата.
-export function ChatWindow({children, className}: ChatWindowProps) {
+export function ChatWindow({ children, className }: ChatWindowProps) {
   const ref = useRef<HTMLDivElement | null>(null);
 
   // автоскролл (пока базовый)

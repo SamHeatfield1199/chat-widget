@@ -30,10 +30,39 @@ export function ChatInput({ currentUser }: ChatInputProps) {
   };
 
   return (
-    <div>
-      <input value={text} onChange={(e) => setText(e.target.value)} />
+    <div
+      style={{
+        display: "flex",
+        padding: "10px",
+        borderTop: "1px solid #333",
+        gap: "8px",
+      }}
+    >
+      <input
+        style={{
+          flex: 1,
+          padding: "10px",
+          borderRadius: "20px",
+          border: "1px solid #444",
+          background: "#1e1e1e",
+          color: "#fff",
+        }}
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+      />
 
-      <button onClick={handleSubmit}>Send</button>
+      <button
+        style={{
+          padding: "10px 16px",
+          borderRadius: "20px",
+          background: "#4f9cff",
+          color: "white",
+          border: "none",
+        }}
+        onClick={handleSubmit}
+      >
+        Send
+      </button>
     </div>
   );
 }

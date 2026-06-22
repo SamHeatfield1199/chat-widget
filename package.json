@@ -38,5 +38,8 @@
     "vite": "^8.0.12",
     "vite-plugin-dts": "^5.0.2",
     "zustand": "^5.0.14"
+  },
+  "dependencies": {
+    "clsx": "^2.1.1"
   }
 }
