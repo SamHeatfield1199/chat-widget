@@ -1,0 +1,9 @@
+.chatWindow {
+  display: flex;
+  flex-direction: column;
+  height: 400px;
+  border: 1px solid #ddd;
+  overflow: hidden;
+  background: #0d0d0d;
+  border-radius: 8px;
+}

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useChat } from "../../hooks/useChat";
+import "./ChatInput.css";
 
 interface ChatInputProps {
   currentUser: {
@@ -12,56 +13,52 @@ interface ChatInputProps {
 // Компонент для ввода и отправки новых сообщений в чате.
 export function ChatInput({ currentUser }: ChatInputProps) {
   const [text, setText] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const { sendMessage } = useChat();
 
   // Обработчик отправки сообщения
   const handleSubmit = async () => {
-    if (!text.trim()) {
+    if (!text.trim() || isLoading) {
       return;
     }
 
-    await sendMessage({
-      text,
-      author: currentUser,
-    });
+    setIsLoading(true);
+    try {
+      await sendMessage({
+        text,
+        author: currentUser,
+      });
+      setText("");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-    setText("");
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      handleSubmit();
+    }
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        padding: "10px",
-        borderTop: "1px solid #333",
-        gap: "8px",
-      }}
-    >
+    <div className="chatInput">
       <input
-        style={{
-          flex: 1,
-          padding: "10px",
-          borderRadius: "20px",
-          border: "1px solid #444",
-          background: "#1e1e1e",
-          color: "#fff",
-        }}
+        className="chatInput__input"
         value={text}
         onChange={(e) => setText(e.target.value)}
+        onKeyDown={handleKeyDown}
+        placeholder="Введите сообщение..."
+        disabled={isLoading}
       />
 
       <button
-        style={{
-          padding: "10px 16px",
-          borderRadius: "20px",
-          background: "#4f9cff",
-          color: "white",
-          border: "none",
-        }}
+        className="chatInput__button"
         onClick={handleSubmit}
+        disabled={isLoading}
       >
-        Send
+        {isLoading ? "..." : "Send"}
       </button>
     </div>
   );

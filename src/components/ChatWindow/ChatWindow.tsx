@@ -1,4 +1,5 @@
 import { type PropsWithChildren, useEffect, useRef } from "react";
+import "./ChatWindow.css";
 
 interface ChatWindowProps extends PropsWithChildren {
   className?: string;
@@ -8,25 +9,22 @@ interface ChatWindowProps extends PropsWithChildren {
 export function ChatWindow({ children, className }: ChatWindowProps) {
   const ref = useRef<HTMLDivElement | null>(null);
 
-  // автоскролл (пока базовый)
+  // автоскролл при получении новых сообщений
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
 
-    el.scrollTop = el.scrollHeight;
+    const scrollTimeout = requestAnimationFrame(() => {
+      el.scrollTop = el.scrollHeight;
+    });
+
+    return () => cancelAnimationFrame(scrollTimeout);
   });
 
   return (
     <div
       ref={ref}
-      className={className}
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        height: "400px",
-        border: "1px solid #ddd",
-        overflow: "hidden",
-      }}
+      className={className ? `chatWindow ${className}` : "chatWindow"}
     >
       {children}
     </div>

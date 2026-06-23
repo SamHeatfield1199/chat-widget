@@ -12,18 +12,17 @@
     "allowImportingTsExtensions": true,
     "verbatimModuleSyntax": true,
     "moduleDetection": "force",
-    "noEmit": true,
     "jsx": "react-jsx",
+
+    /* Declaration files */
+    "declaration": true,
+    "declarationMap": true,
+    "emitDeclarationOnly": true,
 
     /* Linting */
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true,
-
-    /* Declaration files */
-    "declaration": true,
-    "declarationMap": true
   },
   "include": ["src"]
 }

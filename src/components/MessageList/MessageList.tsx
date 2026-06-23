@@ -1,9 +1,11 @@
+import { type MessageType } from "../../types/MessageType";
 import { useChat } from "../../hooks/useChat";
 import { Message } from "../Message/Message";
+import "./MessageList.css";
 
 interface MessageListProps {
   currentUserId: string;
-  renderMessage?: any;
+  renderMessage?: (message: MessageType) => React.ReactNode;
 }
 
 // Компонент для отображения списка сообщений в чате.
@@ -14,7 +16,7 @@ export function MessageList({
   const { messages } = useChat();
 
   return (
-    <div style={{ flex: 1, overflowY: "auto", padding: 10 }}>
+    <div className="messageList">
       {messages.map((message) => {
         const isOwn = message.author.id === currentUserId;
 

@@ -1,63 +1,50 @@
-import { type Message } from "../../types/Message";
+import { type MessageType } from "../../types/MessageType";
 import clsx from "clsx";
+import "./Message.css";
 
 interface MessageProps {
-  message: Message;
+  message: MessageType;
   isOwn: boolean;
 }
 
 // Компонент для отображения отдельного сообщения в чате.
 export function Message({ message, isOwn }: MessageProps) {
+  const avatarSrc =
+    message.author.avatar ||
+    `https://ui-avatars.com/api/?name=${encodeURIComponent(message.author.name)}`;
+
+  const formattedTime = new Date(message.createdAt).toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+
   return (
     <div
       className={clsx("messageRow", {
-        own: isOwn,
+        "messageRow--own": isOwn,
+        "messageRow--other": !isOwn,
       })}
-      style={{
-        display: "flex",
-        justifyContent: isOwn ? "flex-end" : "flex-start",
-        marginBottom: "6px",
-      }}
     >
       <div
-        style={{
-          maxWidth: "60%",
-          padding: "8px 12px",
-          borderRadius: isOwn ? "16px 16px 4px 16px" : "16px 16px 16px 4px",
-          background: isOwn ? "#DCF8C6" : "#2f2f2f",
-          color: isOwn ? "#000" : "#fff",
-        }}
+        className={clsx("messageBubble", {
+          "messageBubble--own": isOwn,
+          "messageBubble--other": !isOwn,
+        })}
       >
         {/* автор */}
         {!isOwn && (
-          <div
-            style={{
-              fontSize: "12px",
-              opacity: 0.7,
-              marginBottom: "2px",
-            }}
-          >
-            {message.author.name}
-          </div>
+          <img
+            className="messageBubble__avatar"
+            src={avatarSrc}
+            alt={`Avatar of ${message.author.name}`}
+          />
         )}
 
         {/* текст */}
-        <div>{message.text}</div>
+        <div className="messageBubble__text">{message.text}</div>
 
         {/* время */}
-        <div
-          style={{
-            fontSize: "10px",
-            opacity: 0.5,
-            marginTop: "4px",
-            textAlign: "right",
-          }}
-        >
-          {new Date(message.createdAt).toLocaleTimeString([], {
-            hour: "2-digit",
-            minute: "2-digit",
-          })}
-        </div>
+        <div className="messageBubble__time">{formattedTime}</div>
       </div>
     </div>
   );

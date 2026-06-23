@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-import type { Message } from "../types/Message";
+import type { MessageType } from "../types/MessageType";
 import type { ChatAdapter } from "../adapters/ChatAdapter";
 import type { SendMessagePayload } from "../types/SendMessagePayload";
 
@@ -10,7 +10,7 @@ interface ChatState {
   adapter: ChatAdapter | null;
 
   // Загруженные сообщения
-  messages: Message[];
+  messages: MessageType[];
 
   // Флаг загрузки сообщений
   isLoading: boolean;
@@ -21,7 +21,7 @@ interface ChatState {
   // Отправка нового сообщения
   sendMessage: (message: SendMessagePayload) => Promise<void>;
   // Добавление нового сообщения в состояние
-  addMessage: (message: Message) => void;
+  addMessage: (message: MessageType) => void;
 
   // Сброс состояния чата
   reset: () => void;
